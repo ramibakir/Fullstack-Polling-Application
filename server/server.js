@@ -1,11 +1,15 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 
 import { PORT } from './constants/index.js';
 import 'dotenv/config.js';
 import errorMiddleware from './middleware/errors.js';
+
 import connectDatabase from './config/db.js';
 import poll from './routes/poll.js';
+import user from './routes/user.js';
+import answer from './routes/answer.js';
 
 const app = express();
 
@@ -15,7 +19,17 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json());
 
+app.use(
+  cors({
+    origin: 'http://localhost:3001',
+    allowedHeaders: ['Content-Type'],
+  })
+);
+
 app.use(`${process.env.BASEURL}/polls`, poll);
+app.use(`${process.env.BASEURL}/users`, user);
+app.use(`${process.env.BASEURL}/answers`, answer);
+
 app.use(errorMiddleware);
 
 connectDatabase();

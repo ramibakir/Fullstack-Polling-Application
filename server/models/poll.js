@@ -1,29 +1,31 @@
 import mongoose from 'mongoose';
 import slugify from 'slugify';
 
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const PollSchema = new Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-            trim: true,
-            min: ['3', 'Poll name must be more than 3 characters'],
-            max: ['100', 'Poll name must be under 100 characters'],
-        },
-        slug: String,
-        description: {
-            type: String,
-            required: true,
-        }
+  {
+    question: {
+      type: String,
+      required: true,
+      trim: true,
+      min: ['3', 'Poll question must be more than 3 characters'],
+      max: ['100', 'Poll question must be under 100 characters'],
     },
-    { timestamps: true }
+    creator: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    slug: String,
+    answer: [],
+  },
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 PollSchema.pre('save', function (next) {
-    this.slug = slugify(this.name, {lower: true});
-    next();
+  this.slug = slugify(this.question, { lower: true });
+  next();
 });
 
 export default mongoose.model('Poll', PollSchema);

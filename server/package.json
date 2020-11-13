@@ -1,11 +1,11 @@
 {
-  "name": "fullstack-polling-application",
+  "name": "fullstack-answering-application",
   "version": "1.0.0",
   "description": "Polling application with MongoDB",
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server/server.js"
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
