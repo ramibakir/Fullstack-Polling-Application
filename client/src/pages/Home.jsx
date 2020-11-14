@@ -10,6 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await list();
+      console.log(data);
       if (error) {
         setError(error);
       } else {
@@ -22,7 +23,7 @@ const Home = () => {
   return (
     <section>
       <Heading mb={2} as="h1" size="md">
-        Polls
+        Home
       </Heading>
       {error && <p>{error}</p>}
       <Flex>
@@ -33,13 +34,13 @@ const Home = () => {
                 {poll.question}
               </Heading>
               <Text fontSize="lg" mb={2}>
-                {poll.creator}
+                {poll.user.email}
               </Text>
               <Text fontSize="lg" mb={2}>
                 <Icon name="iconTest" mr={2} />
-                {poll.createdAt}
+                {new Date(poll.createdAt).toDateString()}
               </Text>
-              <Text fontSize="lg">By: {poll.user.email}</Text>
+              <Text fontSize="lg">By: {poll.user.name}</Text>
             </Box>
           ))}
       </Flex>

@@ -12,13 +12,19 @@ const PollSchema = new Schema(
       min: ['3', 'Poll question must be more than 3 characters'],
       max: ['100', 'Poll question must be under 100 characters'],
     },
-    creator: {
+    user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
       required: true,
     },
     slug: String,
-    answer: [],
+    answer: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Answer',
+        default: 'No answer',
+      },
+    ],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

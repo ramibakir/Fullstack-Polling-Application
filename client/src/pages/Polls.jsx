@@ -9,6 +9,7 @@ const Polls = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await list();
+      console.log(data, error);
       if (error) {
         setError(error);
       } else {

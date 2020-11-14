@@ -1,12 +1,9 @@
 import Poll from '../models/poll.js';
 
-export const getPollById = async (id) => {
-  Poll.findById(id); // Returns promise
-};
+// Returns promise
+export const getPollById = async (id) => Poll.findById(id);
 
-export const listPolls = async () => {
-  Poll.find();
-};
+export const listPolls = async () => Poll.find().populate('name', 'email');
 
 export const createPoll = async (data) => Poll.create(data);
 
