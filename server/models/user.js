@@ -33,7 +33,7 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
-UserSchema.virtual('poll', {
+UserSchema.virtual('polls', {
   ref: 'Poll',
   localField: '_id',
   foreignField: 'user',

@@ -3,14 +3,14 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const AnswerSchema = new Schema({
-  answerDescription: {
+  answerText: {
     type: String,
-    minlength: ['3', 'Name must be more than 3 characters'],
-    maxlength: ['10', 'Name must be under 10 characters'],
+    minlength: ['3', 'Answer must be more than 3 characters'],
+    maxlength: ['10', 'Answer must be under 10 characters'],
   },
 });
 
-AnswerSchema.virtual('answers', {
+AnswerSchema.virtual('polls', {
   ref: 'Poll',
   localField: '_id',
   foreignField: 'answer',

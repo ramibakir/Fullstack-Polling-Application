@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Heading, Flex, Text, Icon } from '@chakra-ui/core';
 import { list } from '../utils/pollService.js';
 
-const Polls = () => {
+const ViewAllPolls = () => {
   const [polls, setPolls] = useState(null);
   const [error, setError] = useState(null);
 
@@ -33,9 +33,6 @@ const Polls = () => {
                 {poll.question}
               </Heading>
               <Text fontSize="lg" mb={2}>
-                {poll.creator}
-              </Text>
-              <Text fontSize="lg" mb={2}>
                 <Icon name="iconTest" mr={2} />
                 {new Date(poll.createdAt).toDateString()}
               </Text>
@@ -47,4 +44,4 @@ const Polls = () => {
   );
 };
 
-export default Polls;
+export default ViewAllPolls;

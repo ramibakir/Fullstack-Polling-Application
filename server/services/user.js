@@ -5,7 +5,7 @@ export const createUser = async (data) => User.create(data);
 
 export const listPolls = async (id) => {
   if (id) {
-    const polls = await Poll.find({ user: id }).populate('user', 'email');
+    const polls = await Poll.find({ user: id });
     return polls;
   }
 };

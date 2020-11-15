@@ -6,7 +6,7 @@ const router = express.Router();
 // Get answer based on ID
 router.get('/:id', answerController.get);
 // Get all answers for specific answer
-router.get('/:id/', answerController.list);
+router.get('/', answerController.list);
 // Create answers
 router.post('/', answerController.create);
 // Update answer
