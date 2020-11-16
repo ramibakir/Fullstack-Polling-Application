@@ -11,3 +11,9 @@ export const listPolls = catchAsyncErrors(async (req, res, next) => {
   const polls = await userService.listUserPolls(id);
   res.status(200).json(polls);
 });
+
+export const get = catchAsyncErrors(async (req, res, next) => {
+  const { email } = req.params;
+  const user = await userService.getUser(email);
+  res.status(200).json(user);
+});

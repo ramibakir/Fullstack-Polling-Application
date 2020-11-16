@@ -9,3 +9,10 @@ export const listPolls = async (id) => {
     return polls;
   }
 };
+
+export const getUser = async (data) => {
+  if (data.email) {
+    const user = await User.findOne({ email: data.email });
+    return user;
+  }
+};

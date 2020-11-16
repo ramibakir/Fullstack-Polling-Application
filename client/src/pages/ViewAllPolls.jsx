@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Heading, Flex, Text, Icon } from '@chakra-ui/core';
+import { Box, Heading, Icon, Flex, Text } from '@chakra-ui/core';
 import { list } from '../utils/pollService.js';
 
 const ViewAllPolls = () => {
@@ -19,6 +19,10 @@ const ViewAllPolls = () => {
     fetchData();
   }, []);
 
+  const testing = () => {
+    console.log('hei');
+  };
+
   return (
     <section>
       <Heading mb={2} as="h1" size="md">
@@ -28,15 +32,41 @@ const ViewAllPolls = () => {
       <Flex>
         {polls &&
           polls.map((poll) => (
-            <Box p="6" as="article" key={poll.id}>
-              <Heading mb={2} as="h2" size="sm">
-                {poll.question}
-              </Heading>
-              <Text fontSize="lg" mb={2}>
-                <Icon name="iconTest" mr={2} />
-                {new Date(poll.createdAt).toDateString()}
-              </Text>
-              <Text fontSize="lg">By: {poll.user.email}</Text>
+            <Box
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              key={poll.id}
+              onClick={testing}
+            >
+              <Box p="6">
+                <Box
+                  color="gray.500"
+                  fontWeight="semibold"
+                  letterSpacing="wide"
+                  fontSize="xs"
+                  ml="2"
+                >
+                  <Icon name="iconDate" mr={2} />
+                  {new Date(poll.createdAt).toLocaleString()}
+                </Box>
+                <Box
+                  mt="1"
+                  fontWeight="semibold"
+                  as="h4"
+                  lineHeight="tight"
+                  isTruncated
+                >
+                  {poll.question}
+                </Box>
+                <Box d="flex" mt="2" alignItems="center">
+                  By: {poll.user.name}
+                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                    {poll.user.email}
+                  </Box>
+                </Box>
+              </Box>
             </Box>
           ))}
       </Flex>

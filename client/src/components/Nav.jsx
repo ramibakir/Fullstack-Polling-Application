@@ -33,7 +33,7 @@ const NavMenuItem = styled.li`
 
     &.active {
       color: #007b5f;
-      border-bottom: 4px spolid #007b5f;
+      border-bottom: 4px solid #007b5f;
     }
   }
 `;
@@ -43,7 +43,13 @@ const Nav = () => (
     <NavMenu>
       <NavMenuItem>
         <NavLink exact to="/" activeClassName="active">
-          Polls
+          Home
+        </NavLink>
+        <NavLink exact to="/polls" activeClassName="active">
+          View All Polls
+        </NavLink>
+        <NavLink exact to="/createpoll" activeClassName="active">
+          Create New Poll
         </NavLink>
       </NavMenuItem>
     </NavMenu>

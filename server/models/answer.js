@@ -6,7 +6,7 @@ const AnswerSchema = new Schema({
   answerText: {
     type: String,
     minlength: ['3', 'Answer must be more than 3 characters'],
-    maxlength: ['10', 'Answer must be under 10 characters'],
+    maxlength: ['100', 'Answer must be under 10 characters'],
   },
 });
 

@@ -1,62 +1,66 @@
 import React, { useEffect, useState } from 'react';
+import { Button, Box, Input } from '@chakra-ui/core';
+import { get } from '../utils/userService.js';
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+  });
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const user = { email, password };
-    const response = await
+    setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-  if (user) {
-    return <div>{user.name}</div>;
-  }
-  <>
-    <div className="FormTitle">
-      <a href="#" className="FormTitleLink">
-        Sign Up
-      </a>
-    </div>
-    <div className="FormCenter">
-      <form className="FormFields" onSubmit={handleSubmit}>
-        <div className="FormField">
-          <label className="FormFieldLabel" htmlFor="email">
-            Email address
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="FormFieldInput"
-            placeholder="Please enter your email"
-            name="email"
-            value={email}
-            onChange={({ target }) => setEmail(target.value)}
-          />
-        </div>
-        <div className="FormField">
-          <label className="FormFieldLabel" htmlFor="password">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            className="FormFieldInput"
-            placeholder="Please enter your password"
-            name="password"
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <div>
-          <button className="FormFieldButton">Sign In</button>{' '}
-          <a href="#" className="FormFieldLink">
-            Create a user
-          </a>
-        </div>
-      </form>
-    </div>
-  </>;
+  const signInUser = () => {
+    console.log(user);
+    get(user);
+  };
+
+  return (
+    <>
+      <Box className="FormCenter">
+        <form className="FormFields" onSubmit={handleSubmit}>
+          <Box className="FormField">
+            <label className="FormFieldLabel" htmlFor="email">
+              Email address
+            </label>
+            <Input
+              type="email"
+              id="email"
+              className="FormFieldInput"
+              placeholder="Please enter your email"
+              name="email"
+              value={user.email}
+              onChange={handleSubmit}
+            />
+          </Box>
+          <div className="FormField">
+            <label className="FormFieldLabel" htmlFor="password">
+              Password
+            </label>
+            <Input
+              type="password"
+              id="password"
+              className="FormFieldInput"
+              placeholder="Please enter your password"
+              name="password"
+              value={user.password}
+              onChange={handleSubmit}
+            />
+          </div>
+          <div>
+            <Button className="FormFieldButton" onClick={signInUser}>
+              Sign In
+            </Button>
+            <Button as="a" href="/signup" className="FormFieldLink">
+              I don't have a user
+            </Button>
+          </div>
+        </form>
+      </Box>
+    </>
+  );
 };
+
+export default SignIn;

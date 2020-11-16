@@ -2,7 +2,7 @@ import http from './http.js';
 
 const API_URL = '/answers';
 
-export const list = async () => {
+export const listAnswer = async () => {
   try {
     return await http.get(`${API_URL}`);
   } catch (error) {
@@ -36,7 +36,7 @@ export const update = async (data) => {
 
 export default {
   create,
-  list,
+  listAnswer,
   get,
   update,
 };

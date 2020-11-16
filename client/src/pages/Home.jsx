@@ -8,32 +8,22 @@ import {
   Button,
   Textarea,
 } from '@chakra-ui/core';
-import { list } from '../utils/pollService.js';
+import { list, update } from '../utils/pollService.js';
+import { create, listAnswer } from '../utils/answerService.js';
 
 const Home = () => {
   const [polls, setPolls] = useState(null);
+  const [tests, setTests] = useState(null);
   const [error, setError] = useState(null);
   const [answer, setAnswer] = useState('');
-  const [empty, setEmpty] = useState(false);
-
-  const isEmpty = () => {
-    if (answer === '') {
-      setEmpty(true);
-    } else {
-      setEmpty(false);
-    }
-  };
 
   const updateAnswer = (event) => {
-    console.log(event.target.value);
-    setAnswer(event.target.value);
-    isEmpty();
+    setAnswer({ answer, [event.target.name]: event.target.value });
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await list();
-      console.log(data);
       if (error) {
         setError(error);
       } else {
@@ -43,6 +33,23 @@ const Home = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await listAnswer();
+      if (error) {
+        setError(error);
+      } else {
+        setTests(data);
+        console.log(`${data.answer}hei`);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const newAnswer = () => {
+    create(answer);
+  };
+
   return (
     <section>
       <Heading mb={2} as="h1" size="md">
@@ -50,6 +57,7 @@ const Home = () => {
       </Heading>
       {error && <p>{error}</p>}
       <Flex>
+        {console.log(polls)}
         {polls &&
           polls.map((poll) => (
             <Box p="6" as="article" key={poll.id}>
@@ -59,24 +67,35 @@ const Home = () => {
               <Textarea
                 placeholder="Your answer here"
                 size="lg"
-                name="answer"
+                name="answerText"
                 onChange={updateAnswer}
               />
               <Text fontSize="lg" mb={2}>
-                <Icon name="iconTest" mr={2} />
+                <Icon name="TimeIcon" mr={2} />
                 {new Date(poll.createdAt).toDateString()}
               </Text>
               <Text fontSize="lg">By: {poll.user.name} </Text>
-              <Button colorscheme="blue" type="submit" onClick={isEmpty}>
+              <Button
+                colorscheme="blue"
+                type="submit"
+                onClick={newAnswer}
+                id={poll.id}
+              >
                 Save Answer
               </Button>
               <Text fontSize="lg">Answer: {poll.answer.answerText}</Text>
+              {tests &&
+                tests.map((test) => (
+                  <Text fontSize="lg">
+                    {test.id} {test.answerText}
+                  </Text>
+                ))}
             </Box>
           ))}
-        <Button colorscheme="red" type="button">
+        <Button colorscheme="red" type="button" as="a" href="/createpoll">
           Create new poll
         </Button>
-        <Button colorscheme="red" type="button">
+        <Button colorscheme="red" type="button" as="a" href="/polls">
           View all polls
         </Button>
       </Flex>

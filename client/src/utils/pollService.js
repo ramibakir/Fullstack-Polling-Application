@@ -26,7 +26,7 @@ export const create = async (data) => {
   }
 };
 
-export const update = async (data) => {
+export const update = async (id, data) => {
   try {
     return await http.put(`${API_URL}`, data);
   } catch (error) {
