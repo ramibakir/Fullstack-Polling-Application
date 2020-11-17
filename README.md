@@ -56,6 +56,8 @@ You will also see any lint errors in the console.
 
 # NB! Create a user first
 
+![](createPollUserString.png)
+
 Create a user before you try to create a poll or answers.
 In the `CreatePoll.jsx` file, which can be found in pages folder,
 there is a method where the user id is hardcoded. Change this to
