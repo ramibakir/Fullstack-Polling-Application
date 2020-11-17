@@ -15,18 +15,18 @@ const Routes = () => (
         <Route exact path="/signin">
           <SignIn />
         </Route>
-        <Route exact path="/signup">
-          <SignUp />
-        </Route>
+        <Route exact path="/signup" render={(props) => <SignUp {...props} />} />
         <Route exact path="/">
           <Home />
         </Route>
         <Route exact path="/polls">
           <ViewAllPolls />
         </Route>
-        <Route exact path="/createpoll">
-          <CreatePoll />
-        </Route>
+        <Route
+          exact
+          path="/createpoll"
+          render={(props) => <CreatePoll {...props} />}
+        />
       </Switch>
     </MainLayout>
   </Router>

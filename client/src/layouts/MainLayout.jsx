@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box } from '@chakra-ui/core';
 import styled from 'styled-components';
 import Nav from '../components/Nav';
+import { Container } from '../styles/Styled';
 
 const StyledHeader = styled.header`
   background: #fff;
@@ -11,14 +11,12 @@ const StyledHeader = styled.header`
 `;
 
 const MainLayout = ({ children }) => (
-  <Box>
+  <Container>
     <StyledHeader>
       <Nav />
     </StyledHeader>
-    <Box w="100%" padding="0 20px" margin="0 auto">
-      {children}
-    </Box>
-  </Box>
+    <Container>{children}</Container>
+  </Container>
 );
 
 export default MainLayout;

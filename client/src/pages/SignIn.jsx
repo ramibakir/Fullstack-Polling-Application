@@ -1,6 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Box, Input } from '@chakra-ui/core';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import { get } from '../utils/userService.js';
+import {
+  Input,
+  LoginButton,
+  InOutForm,
+  FormContainer,
+  Heading,
+} from '../styles/Styled';
+
+const FormTitle = styled(Heading)`
+  text-align: center;
+  font-size: 3em;
+`;
 
 const SignIn = () => {
   const [user, setUser] = useState({
@@ -19,12 +31,10 @@ const SignIn = () => {
 
   return (
     <>
-      <Box className="FormCenter">
-        <form className="FormFields" onSubmit={handleSubmit}>
-          <Box className="FormField">
-            <label className="FormFieldLabel" htmlFor="email">
-              Email address
-            </label>
+      <FormTitle className="FormTitle">Log In</FormTitle>
+      <FormContainer className="FormCenter">
+        <InOutForm className="FormFields" onSubmit={handleSubmit}>
+          <div className="FormField">
             <Input
               type="email"
               id="email"
@@ -34,11 +44,8 @@ const SignIn = () => {
               value={user.email}
               onChange={handleSubmit}
             />
-          </Box>
+          </div>
           <div className="FormField">
-            <label className="FormFieldLabel" htmlFor="password">
-              Password
-            </label>
             <Input
               type="password"
               id="password"
@@ -50,15 +57,15 @@ const SignIn = () => {
             />
           </div>
           <div>
-            <Button className="FormFieldButton" onClick={signInUser}>
+            <LoginButton className="FormFieldButton" onClick={signInUser}>
               Sign In
-            </Button>
-            <Button as="a" href="/signup" className="FormFieldLink">
+            </LoginButton>
+            <LoginButton as="a" href="/signup" className="FormFieldLink">
               I don't have a user
-            </Button>
+            </LoginButton>
           </div>
-        </form>
-      </Box>
+        </InOutForm>
+      </FormContainer>
     </>
   );
 };

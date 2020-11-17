@@ -6,10 +6,10 @@ export const create = catchAsyncErrors(async (req, res, next) => {
   res.status(201).json(user);
 });
 
-export const listPolls = catchAsyncErrors(async (req, res, next) => {
+export const listUsers = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
-  const polls = await userService.listUserPolls(id);
-  res.status(200).json(polls);
+  const user = await userService.listUsers(id);
+  res.status(200).json(user);
 });
 
 export const get = catchAsyncErrors(async (req, res, next) => {

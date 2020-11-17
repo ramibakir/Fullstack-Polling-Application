@@ -1,10 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Heading, Icon, Flex, Text } from '@chakra-ui/core';
+import styled from 'styled-components';
+import {
+  Heading,
+  Container,
+  TextDiv,
+  ShowText,
+  Polls,
+  CardSection,
+  CardBox,
+} from '../styles/Styled';
 import { list } from '../utils/pollService.js';
+
+const ViewPollsTitle = styled(Heading)`
+  text-align: center;
+  font-size: 3em;
+`;
+
+const DateCreatorContainer = styled(TextDiv)`
+  margin: 1em auto;
+`;
+
+const HeadingH4 = styled.h4`
+  text-align: center;
+`;
 
 const ViewAllPolls = () => {
   const [polls, setPolls] = useState(null);
   const [error, setError] = useState(null);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,57 +43,32 @@ const ViewAllPolls = () => {
   }, []);
 
   const testing = () => {
-    console.log('hei');
+    setCount((c) => c + 1);
   };
 
   return (
-    <section>
-      <Heading mb={2} as="h1" size="md">
-        Polls
-      </Heading>
-      {error && <p>{error}</p>}
-      <Flex>
-        {polls &&
-          polls.map((poll) => (
-            <Box
-              maxW="sm"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              key={poll.id}
-              onClick={testing}
-            >
-              <Box p="6">
-                <Box
-                  color="gray.500"
-                  fontWeight="semibold"
-                  letterSpacing="wide"
-                  fontSize="xs"
-                  ml="2"
-                >
-                  <Icon name="iconDate" mr={2} />
-                  {new Date(poll.createdAt).toLocaleString()}
-                </Box>
-                <Box
-                  mt="1"
-                  fontWeight="semibold"
-                  as="h4"
-                  lineHeight="tight"
-                  isTruncated
-                >
-                  {poll.question}
-                </Box>
-                <Box d="flex" mt="2" alignItems="center">
-                  By: {poll.user.name}
-                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                    {poll.user.email}
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          ))}
-      </Flex>
-    </section>
+    <>
+      <ViewPollsTitle>Polls</ViewPollsTitle>
+      <CardSection>
+        {error && <p>{error}</p>}
+        <CardBox>
+          {polls &&
+            polls.map((poll) => (
+              <Polls key={poll.id} onClick={testing}>
+                <Container>
+                  <HeadingH4>{poll.question}</HeadingH4>
+                  <DateCreatorContainer>
+                    <ShowText>
+                      {new Date(poll.createdAt).toDateString()}
+                    </ShowText>
+                    <ShowText>By: {poll.user.name} </ShowText>
+                  </DateCreatorContainer>
+                </Container>
+              </Polls>
+            ))}
+        </CardBox>
+      </CardSection>
+    </>
   );
 };
 

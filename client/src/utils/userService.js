@@ -18,7 +18,16 @@ export const create = async (data) => {
   }
 };
 
+export const list = async () => {
+  try {
+    return await http.get(`${API_URL}`);
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export default {
   create,
   get,
+  list,
 };

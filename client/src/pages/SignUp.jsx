@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
-import { Button, Box, Input } from '@chakra-ui/core';
+import styled from 'styled-components';
+import {
+  Input,
+  LoginButton,
+  InOutForm,
+  FormContainer,
+  Heading,
+} from '../styles/Styled';
 import { create } from '../utils/userService';
 
-const SignUp = () => {
+const FormTitle = styled(Heading)`
+  text-align: center;
+  font-size: 3em;
+`;
+
+const SignUp = (props) => {
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -15,17 +27,15 @@ const SignUp = () => {
 
   const createUser = () => {
     create(user);
+    props.history.push('/');
   };
 
   return (
     <>
-      <div className="FormTitle">SIGN UP</div>
-      <Box className="FormCenter">
-        <form className="FormFields" onSubmit={handleSubmit}>
+      <FormTitle className="FormTitle">SIGN UP</FormTitle>
+      <FormContainer className="FormCenter">
+        <InOutForm className="FormFields" onSubmit={handleSubmit}>
           <div className="FormField">
-            <label className="FormFieldLabel" htmlFor="name">
-              Name
-            </label>
             <Input
               type="text"
               id="name"
@@ -37,9 +47,6 @@ const SignUp = () => {
             />
           </div>
           <div className="FormField">
-            <label className="FormFieldLabel" htmlFor="email">
-              Email address
-            </label>
             <Input
               type="email"
               id="email"
@@ -51,9 +58,6 @@ const SignUp = () => {
             />
           </div>
           <div className="FormField">
-            <label className="FormFieldLabel" htmlFor="password">
-              Password
-            </label>
             <Input
               type="password"
               id="password"
@@ -65,15 +69,15 @@ const SignUp = () => {
             />
           </div>
           <div>
-            <Button className="FormFieldButton" onClick={createUser}>
+            <LoginButton className="FormFieldButton" onClick={createUser}>
               Sign Up
-            </Button>
-            <Button as="a" href="/signin" className="FormFieldLink">
+            </LoginButton>
+            <LoginButton as="a" href="/signin" className="FormFieldLink">
               I already have a user
-            </Button>
+            </LoginButton>
           </div>
-        </form>
-      </Box>
+        </InOutForm>
+      </FormContainer>
     </>
   );
 };

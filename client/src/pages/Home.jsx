@@ -1,19 +1,58 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
 import {
-  Box,
+  Section,
   Heading,
-  Flex,
-  Text,
-  Icon,
+  ButtonContainer,
+  CreateButton,
   Button,
-  Textarea,
-} from '@chakra-ui/core';
-import { list, update } from '../utils/pollService.js';
-import { create, listAnswer } from '../utils/answerService.js';
+  ViewPollsButton,
+  Input,
+  ShowText,
+  TextDiv,
+  Polls,
+  CardSection,
+  CardBox,
+} from '../styles/Styled';
+import { list } from '../utils/pollService.js';
+import { create } from '../utils/answerService.js';
+
+const HeadingH2 = styled.h2`
+  text-align: center;
+`;
+
+const AnswerInput = styled(Input)`
+  color: black;
+`;
+
+const InputButtonContainer = styled(Section)`
+  display: flex;
+  align-items: center;
+`;
+
+const DateCreatorContainer = styled(TextDiv)`
+  margin: 1em auto;
+`;
+
+const SaveButton = styled(Button)`
+  padding: 2px;
+  height: 3em;
+  width: 8em;
+`;
+
+const CreateViewButtonContainer = styled(ButtonContainer)`
+  justify-content: center;
+  margin: 0 auto;
+`;
+
+const MainTitle = styled(Heading)`
+  text-align: center;
+  font-size: 3em;
+`;
 
 const Home = () => {
   const [polls, setPolls] = useState(null);
-  const [tests, setTests] = useState(null);
   const [error, setError] = useState(null);
   const [answer, setAnswer] = useState('');
 
@@ -33,73 +72,48 @@ const Home = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await listAnswer();
-      if (error) {
-        setError(error);
-      } else {
-        setTests(data);
-        console.log(`${data.answer}hei`);
-      }
-    };
-    fetchData();
-  }, []);
-
   const newAnswer = () => {
     create(answer);
+    setAnswer({});
   };
 
   return (
-    <section>
-      <Heading mb={2} as="h1" size="md">
-        Home
-      </Heading>
-      {error && <p>{error}</p>}
-      <Flex>
-        {console.log(polls)}
-        {polls &&
-          polls.map((poll) => (
-            <Box p="6" as="article" key={poll.id}>
-              <Heading mb={2} as="h2" size="sm">
-                {poll.question}
-              </Heading>
-              <Textarea
-                placeholder="Your answer here"
-                size="lg"
-                name="answerText"
-                onChange={updateAnswer}
-              />
-              <Text fontSize="lg" mb={2}>
-                <Icon name="TimeIcon" mr={2} />
-                {new Date(poll.createdAt).toDateString()}
-              </Text>
-              <Text fontSize="lg">By: {poll.user.name} </Text>
-              <Button
-                colorscheme="blue"
-                type="submit"
-                onClick={newAnswer}
-                id={poll.id}
-              >
-                Save Answer
-              </Button>
-              <Text fontSize="lg">Answer: {poll.answer.answerText}</Text>
-              {tests &&
-                tests.map((test) => (
-                  <Text fontSize="lg">
-                    {test.id} {test.answerText}
-                  </Text>
-                ))}
-            </Box>
-          ))}
-        <Button colorscheme="red" type="button" as="a" href="/createpoll">
+    <>
+      <MainTitle as="h1">Home</MainTitle>
+      <CardSection>
+        {error && <p>{error}</p>}
+        <CardBox>
+          {polls &&
+            polls.map((poll) => (
+              <Polls key={poll.id}>
+                <HeadingH2 as="h4">{poll.question}</HeadingH2>
+                <DateCreatorContainer>
+                  <ShowText>{new Date(poll.createdAt).toDateString()}</ShowText>
+                  <ShowText>By: {poll.user.name} </ShowText>
+                </DateCreatorContainer>
+                <InputButtonContainer>
+                  <AnswerInput
+                    placeholder="Your answer here"
+                    name="answerText"
+                    onChange={updateAnswer}
+                  />
+                  <SaveButton type="submit" onClick={newAnswer} id={poll.id}>
+                    Save Answer
+                  </SaveButton>
+                </InputButtonContainer>
+              </Polls>
+            ))}
+        </CardBox>
+      </CardSection>
+      <CreateViewButtonContainer>
+        <CreateButton type="button" as="a" href="/createpoll">
           Create new poll
-        </Button>
-        <Button colorscheme="red" type="button" as="a" href="/polls">
+        </CreateButton>
+        <ViewPollsButton type="button" as="a" href="/polls">
           View all polls
-        </Button>
-      </Flex>
-    </section>
+        </ViewPollsButton>
+      </CreateViewButtonContainer>
+    </>
   );
 };
 
